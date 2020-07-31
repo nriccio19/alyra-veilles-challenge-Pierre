@@ -44,11 +44,30 @@ function insertVeilles() {
 
 insertVeilles()
 
-// Veilles futur
+// TRI PAR CATEGORIES
 
-// Tri de Z à A
+function sortByCategory() {
+    const selectElCat = document.getElementById('category')
+    uniqueCategories.sort()
+    for (let el of uniqueCategories) {
+        const optionCat = document.createElement('option')
+        optionCat.textContent = el.toLowerCase()
+        optionCat.value = el
+        selectElCat.append(optionCat)
+    }
+    selectElCat.addEventListener('change', () => {
+    category = selectElCat.value
+    // C'est le choix fait par l'user dans le menu déroulant
+    insertVeilles()
+    })
+    }
+    
+    sortByCategory()
 
-function sortZtoA () {
+
+// TRI DE Z à A
+
+function sortZtoA() {
     const selectElSort = document.getElementById('sort')
     const optionZa = document.createElement('option')
     optionZa.value = 'za'
@@ -64,23 +83,3 @@ function sortZtoA () {
 // })
 
 sortZtoA()
-
-// Tri par catégories
-
-function sortByCategory() {
-const selectElCat = document.getElementById('category')
-uniqueCategories.sort()
-for (let el of uniqueCategories) {
-    const optionCat = document.createElement('option')
-    optionCat.textContent = el.toLowerCase()
-    optionCat.value = el
-    selectElCat.append(optionCat)
-}
-selectElCat.addEventListener('change', () => {
-category = selectElCat.value
-// C'est le choix fait par l'user dans le menu déroulant
-insertVeilles()
-})
-}
-
-sortByCategory()
