@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const entries = [
   { subject: "OpenSource", date: "03/06/2020", category: "WEB" },
@@ -90,41 +90,40 @@ const entries = [
 // ARRAY AVEC CATEGORIES
 
 function categories(list) {
-    // array avec toutes les catégories
-    let listTotal = []
-    for (let el of list) {
-      if ("category" in el) {
-        listTotal = listTotal.concat(el.category)
-      }
+  // array avec toutes les catégories
+  let listTotal = [];
+  for (let el of list) {
+    if ("category" in el) {
+      listTotal = listTotal.concat(el.category);
     }
-    // array avec chaque catégorie unique (pas de doublons)
-    const uniqueCategories = []
-    listTotal.forEach((el) => {
-      if (!uniqueCategories.includes(el)) {
-        uniqueCategories.push(el)
-      }
-    })
-    return uniqueCategories
   }
-  
-  const uniqueCategories = categories(entries)
   // array avec chaque catégorie unique (pas de doublons)
-  
-  console.log(uniqueCategories)
-
-
-  // ARRAY AVEC SUJETS DES VEILLES
-
-  function subjects(list) {
-    // array avec toutes les sujets veilles
-    let listTotal = []
-    for (let el of list) {
-      if ("subject" in el) {
-        listTotal = listTotal.concat(el.subject)
-      }
+  const uniqueCategories = [];
+  listTotal.forEach(el => {
+    if (!uniqueCategories.includes(el)) {
+      uniqueCategories.push(el);
     }
-    return listTotal
+  });
+  return uniqueCategories;
+}
+
+const uniqueCategories = categories(entries);
+// array avec chaque catégorie unique (pas de doublons)
+
+console.log(uniqueCategories);
+
+// ARRAY AVEC SUJETS DES VEILLES
+
+function subjects(list) {
+  let listTotal = [];
+  for (let el of list) {
+    if ("subject" in el) {
+      listTotal = listTotal.concat(el.subject);
+    }
   }
-  
-  const subjectsVeilles = subjects(entries)
-  console.log(subjectsVeilles)
+  return listTotal;
+}
+
+const subjectsVeilles = subjects(entries);
+// console.log(subjectsVeilles);
+// array avec toutes les sujets veilles

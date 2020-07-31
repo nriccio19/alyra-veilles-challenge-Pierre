@@ -1,45 +1,63 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alyra | Veilles Challenge</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-</head>
-<body class="container">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body class="container">
     <header>
-        <h1 id="h1" class="h1 text-center my-5">Veilles EthersJS</h1>
+      <h1 id="h1" class="h1 text-center my-5">Veilles EthersJS</h1>
     </header>
     <main>
-        <!--Veille à venir-->
-          <div class="form-check">
-            <label class="form-check-label" for="veilles-futur">
-                <input id="veilles-futur" class="form-check-input" type="checkbox" value="">
-              Afficher uniquement les veilles à venir
-            </label>
-          </div>
-          <!--Tri par date & alphabétique-->
-          <div class="input-group mb-3">
-              <label for="sort" class="input-group-text">Trier</label>
-          <select id="sort" name="sort" class="form-select">
-            <option value="az">de A à Z</option>
-          </select>
-        </div>
-        <!--Tri par catégories-->
-        <div class="input-group mb-3">
-          <label for="category" class="input-group-text">Catégories</label>
-      <select id="category" name="category" class="form-select">
-    <option value="toutes" selected>toutes</option>
-      </select>
-    </div>
-        <!--Liste de toutes les veilles-->
-        <div id="liste-veilles"></div>
+      <!--Veille à venir-->
+      <div class="form-check">
+        <label class="form-check-label" for="veilles-futur">
+          <input
+            id="veilles-futur"
+            class="form-check-input"
+            type="checkbox"
+            value=""
+          />
+          Afficher uniquement les veilles à venir
+        </label>
+      </div>
+      <!--Tri par date & alphabétique-->
+      <div class="input-group mb-3">
+        <label for="sort" class="input-group-text">Trier</label>
+        <select id="sort" name="sort" class="form-select">
+          <option value="date">par date</option>
+        </select>
+      </div>
+      <!--Tri par catégories-->
+      <div class="input-group mb-3">
+        <label for="category" class="input-group-text">Catégories</label>
+        <select id="category" name="category" class="form-select">
+          <option value="toutes" selected>toutes</option>
+        </select>
+      </div>
+      <!--Liste de toutes les veilles-->
+      <div id="liste-veilles"></div>
     </main>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
-<script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
-<script src="/js/veilles.js"></script>
-<script src="/js/script.js"></script>
-</body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+      integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
+    <script src="/js/veilles.js"></script>
+    <script src="/js/script.js"></script>
+  </body>
 </html>
