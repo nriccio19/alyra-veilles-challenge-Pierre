@@ -21,19 +21,18 @@ let sort = "";
 
 function insertVeilles() {
   const listeVeilles = document.getElementById("liste-veilles");
-// localise la <div> dans le HTML  
+  // localise la <div> dans le HTML
   const ulEl = document.createElement("ul");
   // crée la liste <ul>
   ulEl.classList.add("row", "list-unstyled");
-  const filteredByCategory = entries.filter(el => {
-    // filtre l'array des veilles par catégorie (?)
-    if (category === "toutes") {
-      return true;
-    } else {
-      return el.category.includes(category);
-    }
-  });
-  console.log('filteredByCategory', filteredByCategory)
+  // ici
+  let filteredByCategory;
+  if (1 == 1) {
+    filteredByCategory = taMere(onlyUpcoming(entries));
+  } else {
+    filteredByCategory = taMere(entries);
+  }
+  console.log("filteredByCategory", filteredByCategory);
   for (let el of filteredByCategory) {
     // pour chaque élément filtré crée un <li> qui contiendra le sujet, la catégorie et la date
     const li = document.createElement("li");
@@ -44,7 +43,7 @@ function insertVeilles() {
         }</p></div>
         <p>${el.date}</p>
         </div>`;
-        ulEl.append(li);
+    ulEl.append(li);
   }
   listeVeilles.innerHTML = "";
   // Ajoute en supprimant ce qui est déjà là
@@ -57,7 +56,7 @@ insertVeilles();
 // TRI PAR CATEGORIES
 
 function sortByCategory() {
-    const selectElCat = document.getElementById("category");
+  const selectElCat = document.getElementById("category");
   // repère l'élément select dédié au choix de la catégorie
   uniqueCategories.sort();
   // trie les catégories uniques par ordre alpha (dans le menu déroulant)
@@ -77,17 +76,17 @@ function sortByCategory() {
   });
 }
 
-sortByCategory()
+sortByCategory();
 
 // TRI PAR DATE/AZ/ZA
 
 function insertVeillesSort() {
   if (sort === "za") {
-    return insertVeilles(sortZtoASubjects(entries))
+    return insertVeilles(sortZtoASubjects(entries));
   } else if (sort === "az") {
-    return insertVeilles(sortAtoZSubjects(entries))
+    return insertVeilles(sortAtoZSubjects(entries));
   } else if (sort === "date") {
-    return insertVeilles(sortByDate(entries))
+    return insertVeilles(sortByDate(entries));
   }
 }
 
@@ -101,24 +100,25 @@ function createSort() {
   optionZa.value = "za";
   optionZa.textContent = "de Z à A";
   selectElSort.append(optionZa);
-  console.log('selectElSort', selectElSort);
-  selectElSort.addEventListener('change', () => {
-    sort = selectElSort.value
-    console.log('sort', sort)
-    insertVeillesSort()
-  })
+  console.log("selectElSort", selectElSort);
+  selectElSort.addEventListener("change", () => {
+    sort = selectElSort.value;
+    console.log("sort", sort);
+    insertVeillesSort();
+  });
 }
 
-createSort()
+createSort();
 
 // FONCTIONS DE TRI
 
 // Par dates (par défaut)
 
 function sortByDate(list) {
-  return list.sort((a, b) => (moment(a.date, "DD/MM/YYYY") > moment(b.date, "DD/MM/YYYY") ? 1 : -1));
+  return list.sort((a, b) =>
+    moment(a.date, "DD/MM/YYYY") > moment(b.date, "DD/MM/YYYY") ? 1 : -1
+  );
 }
-
 
 // De A à Z
 
@@ -139,3 +139,27 @@ function sortZtoASubjects(list) {
 const sortZtoAsubjects = sortZtoASubjects(entries);
 
 console.log("sortZtoAsubjects", sortZtoAsubjects);
+
+// Afficher uniquement les veilles à venir
+
+function onlyUpcoming(list) {
+  return list.filter(
+    el => moment(el.date, "DD/MM/YYYY") > moment(dateNow, "DD/MM/YYYY")
+  );
+}
+
+const onlyUpcomingVeilles = onlyUpcoming(entries);
+
+console.log("onlyUpcomingVeilles", onlyUpcomingVeilles);
+
+//----------------------------------
+
+function taMere(pute) {
+  return pute.filter(el => {
+    if (category === "toutes") {
+      return true;
+    } else {
+      return el.category.includes(category);
+    }
+  });
+}
