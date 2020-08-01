@@ -112,18 +112,3 @@ const uniqueCategories = categories(entries);
 
 console.log(uniqueCategories);
 
-// ARRAY AVEC SUJETS DES VEILLES
-
-function subjects(list) {
-  let listTotal = [];
-  for (let el of list) {
-    if ("subject" in el) {
-      listTotal = listTotal.concat(el.subject);
-    }
-  }
-  return listTotal;
-}
-
-const subjectsVeilles = subjects(entries);
-// console.log(subjectsVeilles);
-// array avec toutes les sujets veilles

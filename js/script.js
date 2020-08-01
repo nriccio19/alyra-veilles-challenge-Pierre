@@ -17,8 +17,9 @@ h1.insertAdjacentHTML("afterend", introP);
 // AJOUT DE TOUTES LES VEILLES + VEILLES PAR CATEGORIE
 
 let category = "toutes";
-const sort = "de Z à A";
+let sort = "de Z à A";
 // let za = "de Z à A"
+
 
 function insertVeilles() {
   const listeVeilles = document.getElementById("liste-veilles");
@@ -26,6 +27,11 @@ function insertVeilles() {
   const ulEl = document.createElement("ul");
   // crée la liste <ul>
   ulEl.classList.add("row", "list-unstyled");
+  /*
+  if (sort === 'az') {
+    return sortAtoZSubjects(entries);
+  }
+  */
   const filteredByCategory = entries.filter(el => {
     // filtre l'array des veilles par catégorie (?)
     if (category === "toutes") {
@@ -34,6 +40,7 @@ function insertVeilles() {
       return el.category.includes(category);
     }
   });
+  console.log('filteredByCategory', filteredByCategory)
   for (let el of filteredByCategory) {
     // pour chaque élément filtré crée un <li> qui contiendra le sujet, la catégorie et la date
     const li = document.createElement("li");
@@ -44,7 +51,7 @@ function insertVeilles() {
         }</p></div>
         <p>${el.date}</p>
         </div>`;
-    ulEl.append(li);
+        ulEl.append(li);
   }
   listeVeilles.innerHTML = "";
   // Ajoute en supprimant ce qui est déjà là
@@ -57,10 +64,10 @@ insertVeilles();
 // TRI PAR CATEGORIES
 
 function sortByCategory() {
-  const selectElCat = document.getElementById("category");
+    const selectElCat = document.getElementById("category");
   // repère l'élément select dédié au choix de la catégorie
   uniqueCategories.sort();
-  // trie les catégories uniques par ordre Alpha (dans le menu déroulant)
+  // trie les catégories uniques par ordre alpha (dans le menu déroulant)
   for (let el of uniqueCategories) {
     // pour chaque catégorie crée une <option>, un choix cliquable par l'user
     const optionCat = document.createElement("option");
@@ -77,9 +84,18 @@ function sortByCategory() {
   });
 }
 
-sortByCategory();
+sortByCategory()
 
 // TRI DE Z à A
+
+
+function insertVeillesSort() {
+  if (sort === "za") {
+    return insertVeilles(sortZtoASubjects(entries))
+  } else if (sort === "az") {
+    return insertVeilles(sortAtoZSubjects(entries))
+  }
+}
 
 function createZtoA() {
   const selectElSort = document.getElementById("sort");
@@ -87,47 +103,42 @@ function createZtoA() {
   optionZa.value = "za";
   optionZa.textContent = "de Z à A";
   selectElSort.append(optionZa);
-  console.log(selectElSort);
-  // élément select est localisé
-  // élément option avec valeur za est créé et localisé
-}
-/*
-selectElSort.addEventListener('change', () => {
-sort = selectElSort.value
-*/
-
-console.log(createZtoA());
-
-// tri de l'array
-
-// A à Z :
-
-function sortAtoZ(list) {
-  return list.sort((right, left) => {
-    if (right < left) {
-      return -1;
-    } else if (right < left) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
+  const optionAz = document.createElement("option");
+  optionAz.value = "az";
+  optionAz.textContent = "de A à Z";
+  selectElSort.append(optionAz);
+  console.log('selectElSort', selectElSort);
+  selectElSort.addEventListener('change', () => {
+    sort = selectElSort.value
+    console.log('sort', sort)
+    insertVeillesSort()
+  })
 }
 
-console.log("sortAtoZ", sortAtoZ(subjectsVeilles));
+createZtoA()
 
-// Z à A :
+// TRI DE L'ARRAY
 
-function sortZtoA(list) {
-  return list.sort((right, left) => {
-    if (right < left) {
-      return 1;
-    } else if (right > left) {
-      return -1;
-    } else {
-      return 0;
-    }
-  });
+// TRI PAR DATES (par défaut)
+
+console.log("entries", entries);
+
+// TRI DE A à Z
+
+function sortAtoZSubjects(list) {
+  return list.sort((a, b) => (a.subject > b.subject ? 1 : -1));
 }
 
-console.log("sortZtoA", sortZtoA(subjectsVeilles));
+const sortAtoZsubjects = sortAtoZSubjects(entries);
+
+console.log("sortAtoZsubjects", sortAtoZsubjects);
+
+// TRI DE Z à A
+
+function sortZtoASubjects(list) {
+  return list.sort((a, b) => (a.subject > b.subject ? -1 : 1));
+}
+
+const sortZtoAsubjects = sortZtoASubjects(entries);
+
+console.log("sortZtoAsubjects", sortZtoAsubjects);
