@@ -14,12 +14,10 @@ let introP = `<p class="bg-primary text-center text-light py-3">Nous sommes le $
 )}</p>`;
 h1.insertAdjacentHTML("afterend", introP);
 
-// AJOUT DE TOUTES LES VEILLES + VEILLES PAR CATEGORIE
+// FONCTION D'AJOUT DE VEILLES PAR CATEGORIES
 
 let category = "toutes";
-let sort = "de Z à A";
-// let za = "de Z à A"
-
+let sort = "";
 
 function insertVeilles() {
   const listeVeilles = document.getElementById("liste-veilles");
@@ -27,11 +25,6 @@ function insertVeilles() {
   const ulEl = document.createElement("ul");
   // crée la liste <ul>
   ulEl.classList.add("row", "list-unstyled");
-  /*
-  if (sort === 'az') {
-    return sortAtoZSubjects(entries);
-  }
-  */
   const filteredByCategory = entries.filter(el => {
     // filtre l'array des veilles par catégorie (?)
     if (category === "toutes") {
@@ -86,7 +79,7 @@ function sortByCategory() {
 
 sortByCategory()
 
-// FONCTION DE TRI SELON SELECTION
+// TRI PAR DATE/AZ/ZA
 
 function insertVeillesSort() {
   if (sort === "za") {
@@ -98,16 +91,16 @@ function insertVeillesSort() {
   }
 }
 
-function createZtoA() {
+function createSort() {
   const selectElSort = document.getElementById("sort");
-  const optionZa = document.createElement("option");
-  optionZa.value = "za";
-  optionZa.textContent = "de Z à A";
-  selectElSort.append(optionZa);
   const optionAz = document.createElement("option");
   optionAz.value = "az";
   optionAz.textContent = "de A à Z";
   selectElSort.append(optionAz);
+  const optionZa = document.createElement("option");
+  optionZa.value = "za";
+  optionZa.textContent = "de Z à A";
+  selectElSort.append(optionZa);
   console.log('selectElSort', selectElSort);
   selectElSort.addEventListener('change', () => {
     sort = selectElSort.value
@@ -116,7 +109,7 @@ function createZtoA() {
   })
 }
 
-createZtoA()
+createSort()
 
 // FONCTIONS DE TRI
 
