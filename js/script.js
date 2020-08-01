@@ -86,14 +86,15 @@ function sortByCategory() {
 
 sortByCategory()
 
-// TRI DE Z à A
-
+// FONCTION DE TRI SELON SELECTION
 
 function insertVeillesSort() {
   if (sort === "za") {
     return insertVeilles(sortZtoASubjects(entries))
   } else if (sort === "az") {
     return insertVeilles(sortAtoZSubjects(entries))
+  } else if (sort === "date") {
+    return insertVeilles(sortByDate(entries))
   }
 }
 
@@ -117,13 +118,16 @@ function createZtoA() {
 
 createZtoA()
 
-// TRI DE L'ARRAY
+// FONCTIONS DE TRI
 
-// TRI PAR DATES (par défaut)
+// Par dates (par défaut)
 
-console.log("entries", entries);
+function sortByDate(list) {
+  return list.sort((a, b) => (moment(a.date, "DD/MM/YYYY") > moment(b.date, "DD/MM/YYYY") ? 1 : -1));
+}
 
-// TRI DE A à Z
+
+// De A à Z
 
 function sortAtoZSubjects(list) {
   return list.sort((a, b) => (a.subject > b.subject ? 1 : -1));
@@ -133,7 +137,7 @@ const sortAtoZsubjects = sortAtoZSubjects(entries);
 
 console.log("sortAtoZsubjects", sortAtoZsubjects);
 
-// TRI DE Z à A
+// De Z à A
 
 function sortZtoASubjects(list) {
   return list.sort((a, b) => (a.subject > b.subject ? -1 : 1));
