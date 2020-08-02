@@ -18,6 +18,8 @@ h1.insertAdjacentHTML("afterend", introP);
 
 let category = "toutes";
 let sort = "";
+let checkbox = document.getElementById("veilles-futur");
+console.log("checkbox.checked ?", checkbox.checked);
 
 function insertVeilles() {
   const listeVeilles = document.getElementById("liste-veilles");
@@ -27,7 +29,7 @@ function insertVeilles() {
   ulEl.classList.add("row", "list-unstyled");
   // ici
   let filteredByCategory;
-  if (1 == 1) {
+  if (checkbox.checked == true) {
     filteredByCategory = taMere(onlyUpcoming(entries));
   } else {
     filteredByCategory = taMere(entries);
@@ -38,7 +40,7 @@ function insertVeilles() {
     const li = document.createElement("li");
     li.innerHTML = `<div class="card p-3 my-1">
         <h2>${el.subject}</h2>
-        <div><p class="card d-inline p-1 bg-primary text-white">${
+        <div><p class="card d-inline px-1 bg-primary text-white">${
           el.category
         }</p></div>
         <p>${el.date}</p>
@@ -52,6 +54,14 @@ function insertVeilles() {
 }
 
 insertVeilles();
+
+function activateCheckbox() {
+  checkbox.addEventListener("change", () => {
+    insertVeilles();
+  });
+}
+
+activateCheckbox();
 
 // TRI PAR CATEGORIES
 
