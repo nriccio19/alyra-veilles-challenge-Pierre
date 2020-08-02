@@ -30,9 +30,9 @@ function insertVeilles() {
   // ici
   let filteredByCategory;
   if (checkbox.checked == true) {
-    filteredByCategory = taMere(onlyUpcoming(entries));
+    filteredByCategory = filterCategories(onlyUpcoming(entries));
   } else {
-    filteredByCategory = taMere(entries);
+    filteredByCategory = filterCategories(entries);
   }
   console.log("filteredByCategory", filteredByCategory);
   for (let el of filteredByCategory) {
@@ -164,8 +164,8 @@ console.log("onlyUpcomingVeilles", onlyUpcomingVeilles);
 
 //----------------------------------
 
-function taMere(pute) {
-  return pute.filter(el => {
+function filterCategories(list) {
+  return list.filter(el => {
     if (category === "toutes") {
       return true;
     } else {
