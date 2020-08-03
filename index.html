@@ -16,32 +16,40 @@
       <h1 id="h1" class="h1 text-center my-5">Veilles EthersJS</h1>
     </header>
     <main>
-      <!--Veille à venir-->
-      <div class="form-check">
-        <label class="form-check-label" for="veilles-futur">
-          <input
-            id="veilles-futur"
-            class="form-check-input"
-            type="checkbox"
-            value=""
-          />
-          Afficher uniquement les veilles à venir
-        </label>
-      </div>
+      <div class="row">
       <!--Tri par date & alphabétique-->
+      <div class="col-lg-4">
       <div class="input-group mb-3">
         <label for="sort" class="input-group-text">Trier</label>
         <select id="sort" name="sort" class="form-select">
-          <option value="date">par date</option>
+          <option value="date" selected>par date</option>
         </select>
       </div>
+      </div>  
       <!--Tri par catégories-->
+      <div class="col-lg-4">
       <div class="input-group mb-3">
         <label for="category" class="input-group-text">Catégories</label>
         <select id="category" name="category" class="form-select">
           <option value="toutes" selected>toutes</option>
         </select>
       </div>
+      </div>
+            <!--Veille à venir-->
+            <div class="col-lg-4">
+              <div class="form-check my-1">
+                <label class="form-check-label" for="veilles-futur">
+                  <input
+                    id="veilles-futur"
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                  />
+                  Afficher uniquement les veilles à venir
+                </label>
+              </div>
+              </div>
+    </div>
       <!--Liste de toutes les veilles-->
       <div id="liste-veilles"></div>
     </main>

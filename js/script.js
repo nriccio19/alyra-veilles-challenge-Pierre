@@ -36,6 +36,9 @@ function insertVeilles() {
   }
   console.log("filteredByCategory", filteredByCategory);
   for (let el of filteredByCategory) {
+    const fullDateFormat = moment(el.date, "DD/MM/YYYY", true);
+    fullDateFormat.locale("fr");
+    const fullDate = fullDateFormat.format("dddd DD/MM/YYYY");
     // pour chaque élément filtré crée un <li> qui contiendra le sujet, la catégorie et la date
     const li = document.createElement("li");
     li.innerHTML = `<div class="card p-3 my-1">
@@ -43,12 +46,12 @@ function insertVeilles() {
         <div><p class="card d-inline px-1 bg-primary text-white">${
           el.category
         }</p></div>
-        <p>${el.date}</p>
+        <p>${fullDate}</p>
         </div>`;
     ulEl.append(li);
   }
   listeVeilles.innerHTML = "";
-  // Ajoute en supprimant ce qui est déjà là
+  // Ajoute en supprimant ce qui était là
   listeVeilles.prepend(ulEl);
   // intègre <ul> dans le HTML
 }
