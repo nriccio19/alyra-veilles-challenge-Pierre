@@ -1,72 +1,76 @@
 "use strict";
 
-// FUNCTIONS
+// Variables
 
-// DATE DU JOUR
+const uniqueCategories = categories(entries);
+let category = "toutes";
+let sort = "";
+let checkbox = document.getElementById("veilles-futur");
+console.log("checkbox.checked ?", checkbox.checked);
+
+// Date du jour
 
 const dateNow = moment();
 dateNow.locale("fr");
 
 const h1 = document.getElementById("h1");
 
-let introP = `<p class="bg-primary text-center text-light py-3">Nous sommes le ${dateNow.format(
+let introP = `<p class="bg-primary text-center text-light py-3 mb-3">Nous sommes le ${dateNow.format(
   "dddd D MMMM YYYY"
-)}</p>`;
+)} &#128526</p>`;
 h1.insertAdjacentHTML("afterend", introP);
 
-// FONCTION D'AJOUT DE VEILLES PAR CATEGORIES
+// FONCTIONS DE TRI
 
-let category = "toutes";
-let sort = "";
-let checkbox = document.getElementById("veilles-futur");
-console.log("checkbox.checked ?", checkbox.checked);
+// Par dates
 
-function insertVeilles() {
-  const listeVeilles = document.getElementById("liste-veilles");
-  // localise la <div> dans le HTML
-  const ulEl = document.createElement("ul");
-  // crée la liste <ul>
-  ulEl.classList.add("row", "list-unstyled");
-  // ici
-  let filteredByCategory;
-  if (checkbox.checked == true) {
-    filteredByCategory = filterCategories(onlyUpcoming(entries));
-  } else {
-    filteredByCategory = filterCategories(entries);
-  }
-  console.log("filteredByCategory", filteredByCategory);
-  for (let el of filteredByCategory) {
-    const fullDateFormat = moment(el.date, "DD/MM/YYYY", true);
-    fullDateFormat.locale("fr");
-    const fullDate = fullDateFormat.format("dddd DD/MM/YYYY");
-    // pour chaque élément filtré crée un <li> qui contiendra le sujet, la catégorie et la date
-    const li = document.createElement("li");
-    li.innerHTML = `<div class="card p-3 my-1">
-        <h2>${el.subject}</h2>
-        <div><p class="card d-inline px-1 bg-primary text-white">${
-          el.category
-        }</p></div>
-        <p>${fullDate}</p>
-        </div>`;
-    ulEl.append(li);
-  }
-  listeVeilles.innerHTML = "";
-  // Ajoute en supprimant ce qui était là
-  listeVeilles.prepend(ulEl);
-  // intègre <ul> dans le HTML
+function sortByDate(list) {
+  return list.sort((a, b) =>
+    moment(a.date, "DD/MM/YYYY") > moment(b.date, "DD/MM/YYYY") ? 1 : -1
+  );
 }
 
-insertVeilles();
+// De A à Z
 
-function activateCheckbox() {
-  checkbox.addEventListener("change", () => {
-    insertVeilles();
+function sortAtoZSubjects(list) {
+  return list.sort((a, b) => (a.subject > b.subject ? 1 : -1));
+}
+
+// De Z à A
+
+function sortZtoASubjects(list) {
+  return list.sort((a, b) => (a.subject > b.subject ? -1 : 1));
+}
+
+// Afficher uniquement les veilles à venir
+
+function onlyUpcoming(list) {
+  return list.filter(
+    el => moment(el.date, "DD/MM/YYYY") > moment(dateNow, "DD/MM/YYYY")
+  );
+}
+
+// Création de l'array avec les catégories uniques (sans doublons)
+
+function categories(list) {
+  // array avec toutes les catégories
+  let listTotal = [];
+  for (let el of list) {
+    if ("category" in el) {
+      listTotal = listTotal.concat(el.category);
+    }
+  }
+  const uniqueCategories = [];
+  listTotal.forEach(el => {
+    if (!uniqueCategories.includes(el)) {
+      uniqueCategories.push(el);
+    }
   });
+  return uniqueCategories;
 }
 
-activateCheckbox();
 
-// TRI PAR CATEGORIES
+// Création des options de tri par catégories
 
 function sortByCategory() {
   const selectElCat = document.getElementById("category");
@@ -91,7 +95,17 @@ function sortByCategory() {
 
 sortByCategory();
 
-// TRI PAR DATE/AZ/ZA
+// Ajout de l'évènement checkbox
+
+function activateCheckbox() {
+  checkbox.addEventListener("change", () => {
+    insertVeilles();
+  });
+}
+
+activateCheckbox();
+
+// Tri A-Z, Z-A, date pour insertVeilles
 
 function insertVeillesSort() {
   if (sort === "za") {
@@ -102,6 +116,8 @@ function insertVeillesSort() {
     return insertVeilles(sortByDate(entries));
   }
 }
+
+// Création des options de tri A-Z et Z-A (date déjà dans le HTML)
 
 function createSort() {
   const selectElSort = document.getElementById("sort");
@@ -123,49 +139,7 @@ function createSort() {
 
 createSort();
 
-// FONCTIONS DE TRI
-
-// Par dates (par défaut)
-
-function sortByDate(list) {
-  return list.sort((a, b) =>
-    moment(a.date, "DD/MM/YYYY") > moment(b.date, "DD/MM/YYYY") ? 1 : -1
-  );
-}
-
-// De A à Z
-
-function sortAtoZSubjects(list) {
-  return list.sort((a, b) => (a.subject > b.subject ? 1 : -1));
-}
-
-const sortAtoZsubjects = sortAtoZSubjects(entries);
-
-console.log("sortAtoZsubjects", sortAtoZsubjects);
-
-// De Z à A
-
-function sortZtoASubjects(list) {
-  return list.sort((a, b) => (a.subject > b.subject ? -1 : 1));
-}
-
-const sortZtoAsubjects = sortZtoASubjects(entries);
-
-console.log("sortZtoAsubjects", sortZtoAsubjects);
-
-// Afficher uniquement les veilles à venir
-
-function onlyUpcoming(list) {
-  return list.filter(
-    el => moment(el.date, "DD/MM/YYYY") > moment(dateNow, "DD/MM/YYYY")
-  );
-}
-
-const onlyUpcomingVeilles = onlyUpcoming(entries);
-
-console.log("onlyUpcomingVeilles", onlyUpcomingVeilles);
-
-//----------------------------------
+// Tri par catégories de l'élement select
 
 function filterCategories(list) {
   return list.filter(el => {
@@ -176,3 +150,45 @@ function filterCategories(list) {
     }
   });
 }
+
+// Insertion des veilles
+
+function insertVeilles() {
+  const listeVeilles = document.getElementById("liste-veilles");
+  // localise la <div> qui contiendra les veilles dans le HTML
+  const ulEl = document.createElement("ul");
+  // crée la liste <ul>
+  ulEl.classList.add("row", "list-unstyled");
+  let filteredByCategory;
+  // Si la checkbox est checkée, utilise l'array des veilles à venir
+  if (checkbox.checked == true) {
+    filteredByCategory = filterCategories(onlyUpcoming(entries));
+  } else {
+    filteredByCategory = filterCategories(entries);
+  }
+  console.log("filteredByCategory", filteredByCategory);
+  for (let el of filteredByCategory) {
+    // affiche le jour + la date pour chaque veille
+    const fullDateFormat = moment(el.date, "DD/MM/YYYY", true);
+    fullDateFormat.locale("fr");
+    const fullDate = fullDateFormat.format("dddd DD/MM/YYYY");
+    // pour chaque élément filtré crée un <li> qui contiendra le sujet, la catégorie et la date de la veille
+    const li = document.createElement("li");
+    li.innerHTML = `<div class="card p-3 my-1">
+        <h2>${el.subject}</h2>
+        <div><p class="btn btn-primary btn-sm text-light">${
+          el.category
+        }</p></div>
+        <p>${fullDate}</p>
+        </div>`;
+    ulEl.append(li);
+  }
+  listeVeilles.innerHTML = "";
+  // Ajoute en supprimant ce qui était là
+  listeVeilles.prepend(ulEl);
+  // intègre <ul> dans le HTML
+}
+
+insertVeilles();
+
+//----------------------------------

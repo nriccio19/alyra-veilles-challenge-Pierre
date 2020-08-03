@@ -86,29 +86,3 @@ const entries = [
   { subject: "Simplicity", date: "28/09/2020", category: "DEV BC" },
   { subject: "Social Blockchain", date: "30/09/2020", category: "Blockchain" }
 ];
-
-// ARRAY AVEC CATEGORIES
-
-function categories(list) {
-  // array avec toutes les catégories
-  let listTotal = [];
-  for (let el of list) {
-    if ("category" in el) {
-      listTotal = listTotal.concat(el.category);
-    }
-  }
-  // array avec chaque catégorie unique (pas de doublons)
-  const uniqueCategories = [];
-  listTotal.forEach(el => {
-    if (!uniqueCategories.includes(el)) {
-      uniqueCategories.push(el);
-    }
-  });
-  return uniqueCategories;
-}
-
-const uniqueCategories = categories(entries);
-// array avec chaque catégorie unique (pas de doublons)
-
-console.log(uniqueCategories);
-
